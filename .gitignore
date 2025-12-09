@@ -1,0 +1,35 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Documentation files (keep only essential ones)
+FIREBASE_STORAGE_SETUP.md
+GOOGLE_MAPS_SETUP.md
+IP_SETUP.md
+LOGO_INFO.md
+
+# Temporary files
+*.log
+*.tmp
+*.swp
+*~
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+target/
+build/
+dist/
+
+# Project specific
+launcher_icons/
+posting/
+our_story_logo.svg
+upload-image.sh

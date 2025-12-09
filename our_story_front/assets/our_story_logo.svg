@@ -1,0 +1,43 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B9D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C06C84;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFF0F5;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGradient)"/>
+  
+  <!-- Book pages (left page) -->
+  <path d="M 180 200 L 180 350 L 250 340 L 250 190 Z" fill="#FFFFFF" opacity="0.9"/>
+  
+  <!-- Book pages (right page) -->
+  <path d="M 262 190 L 262 340 L 332 350 L 332 200 Z" fill="#FFFFFF" opacity="0.85"/>
+  
+  <!-- Book spine -->
+  <rect x="248" y="190" width="16" height="160" fill="#C06C84" opacity="0.6"/>
+  
+  <!-- Heart shape on the book -->
+  <path d="M 256 220 
+           C 256 220, 246 210, 236 210
+           C 226 210, 216 215, 216 230
+           C 216 245, 226 255, 256 280
+           C 286 255, 296 245, 296 230
+           C 296 215, 286 210, 276 210
+           C 266 210, 256 220, 256 220 Z" 
+        fill="url(#heartGradient)" 
+        stroke="#FF6B9D" 
+        stroke-width="2"/>
+  
+  <!-- Small decorative hearts -->
+  <circle cx="200" cy="250" r="4" fill="#FFFFFF" opacity="0.7"/>
+  <circle cx="312" cy="260" r="4" fill="#FFFFFF" opacity="0.7"/>
+  <circle cx="220" cy="310" r="3" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="292" cy="315" r="3" fill="#FFFFFF" opacity="0.6"/>
+</svg>
