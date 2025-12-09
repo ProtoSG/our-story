@@ -25,7 +25,7 @@ services:
       dockerfile: Dockerfile
     container_name: our-story-app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://${DB_HOST}:5432/${POSTGRES_DB}?user=${POSTGRES_USER}&password=${POSTGRES_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${DB_HOST}/${POSTGRES_DB}?user=${POSTGRES_USER}&password=${POSTGRES_PASSWORD}&sslmode=require&channelBinding=require
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
       JWT_EXPIRATION: ${JWT_EXPIRATION}
       JWT_REFRESH_EXPIRATION: ${JWT_REFRESH_EXPIRATION}
