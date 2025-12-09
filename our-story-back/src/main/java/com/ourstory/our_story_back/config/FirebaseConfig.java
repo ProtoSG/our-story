@@ -29,8 +29,14 @@ public class FirebaseConfig {
     @Value("${firebase.private-key:#{null}}")
     private String privateKey;
 
+    @Value("${firebase.private-key-id:#{null}}")
+    private String privateKeyId;
+
     @Value("${firebase.client-email:#{null}}")
     private String clientEmail;
+
+    @Value("${firebase.client-id:#{null}}")
+    private String clientId;
 
     @Value("${firebase.credentials-path:#{null}}")
     private String credentialsPath;
@@ -40,28 +46,48 @@ public class FirebaseConfig {
 
     private GoogleCredentials getCredentials() throws IOException {
         // If environment variables are provided, use them
-        if (projectId != null && privateKey != null && clientEmail != null) {
+        if (projectId != null && privateKey != null && clientEmail != null && clientId != null && privateKeyId != null) {
             log.info("Initializing Firebase with environment variables");
+            
+            // Construct complete service account JSON with all required fields
             String jsonCredentials = String.format(
-                "{ \"type\": \"service_account\", \"project_id\": \"%s\", \"private_key\": \"%s\", \"client_email\": \"%s\" }",
-                projectId, privateKey.replace("\\n", "\n"), clientEmail
+                "{" +
+                "\"type\": \"service_account\"," +
+                "\"project_id\": \"%s\"," +
+                "\"private_key_id\": \"%s\"," +
+                "\"private_key\": \"%s\"," +
+                "\"client_email\": \"%s\"," +
+                "\"client_id\": \"%s\"," +
+                "\"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\"," +
+                "\"token_uri\": \"https://oauth2.googleapis.com/token\"," +
+                "\"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\"," +
+                "\"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/%s\"," +
+                "\"universe_domain\": \"googleapis.com\"" +
+                "}",
+                projectId,
+                privateKeyId,
+                privateKey.replace("\\n", "\n"),
+                clientEmail,
+                clientId,
+                clientEmail.replace("@", "%40")
             );
+            
             return GoogleCredentials.fromStream(
                 new ByteArrayInputStream(jsonCredentials.getBytes(StandardCharsets.UTF_8))
             );
         }
         
         // Fallback to credentials file if available
-        if (credentialsPath != null) {
+        if (credentialsPath != null && !credentialsPath.isEmpty()) {
             log.info("Initializing Firebase with credentials file: {}", credentialsPath);
             InputStream serviceAccount = new ClassPathResource(credentialsPath).getInputStream();
             return GoogleCredentials.fromStream(serviceAccount);
         }
         
         throw new IllegalStateException(
-            "Firebase credentials not configured. Provide either environment variables " +
-            "(FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY, FIREBASE_CLIENT_EMAIL) " +
-            "or credentials file path (FIREBASE_CREDENTIALS_PATH)"
+            "Firebase credentials not configured. Provide either:\n" +
+            "1. Environment variables: FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY, FIREBASE_PRIVATE_KEY_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_CLIENT_ID\n" +
+            "2. Credentials file path: FIREBASE_CREDENTIALS_PATH"
         );
     }
 
